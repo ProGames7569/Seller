@@ -10,11 +10,12 @@ public class Seller extends PluginBase {
     @Override
     public void onEnable() {
         this.getDataFolder().mkdir();
-        this.priceList = "Seller/priceslist,json";
+        this.priceList = "/pricelist.json";
         getServer().getCommandMap().registerAll("Seller", Arrays.asList(
             new SellCommand()
         ));
         getServer().getPluginManager().registerEvents(new InventoryCloseListener(this), this);
+        getServer().getPluginManager().registerEvents(new JumpEventDEBUG(), this);
     }
 }
 
