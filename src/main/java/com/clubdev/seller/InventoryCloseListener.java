@@ -35,8 +35,8 @@ public class InventoryCloseListener implements Listener {
             JSONObject pricelist = new JSONObject(tokener);
             for(Item item : e.getInventory().getContents().values()) {
                 try {
-                    if(item.isTool()) {
-                        money = money + Math.round(((pricelist.getInt(item.getNamespaceId())) * ((float) item.getDamage() / (float) item.getMaxDurability())));
+                    if(item.isTool() || item.isArmor()) {
+                        money = money + calculatePrice(item.getMaxDurability() - item.getDamage(), item.getMaxDurability(), pricelist.getInt(item.getNamespaceId()));
                     } else {
                         money = money + pricelist.getInt(item.getNamespaceId()) * item.getCount();
                     }
@@ -46,5 +46,11 @@ public class InventoryCloseListener implements Listener {
             }
             player.sendMessage("У вас: " + money + " деняк!");
         }
+    }
+
+    public static int calculatePrice(int durability, int maxDurability, int price) {
+        double durabilityRatio = (double) durability / maxDurability;
+        int calculatedPrice = (int) (durabilityRatio * price);
+        return calculatedPrice;
     }
 }

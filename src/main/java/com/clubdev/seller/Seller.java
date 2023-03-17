@@ -15,7 +15,6 @@ public class Seller extends PluginBase {
             new SellCommand()
         ));
         getServer().getPluginManager().registerEvents(new InventoryCloseListener(this), this);
-        getServer().getPluginManager().registerEvents(new JumpEventDEBUG(), this);
     }
 }
 
