@@ -5,6 +5,8 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.inventory.InventoryCloseEvent;
 import cn.nukkit.item.Item;
+import com.clubdev.economy.Economy;
+import com.clubdev.economy.managers.EconomyManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -21,6 +23,8 @@ public class EventListener implements Listener {
     public EventListener(Seller main) {
         this.main = main;
     }
+    Economy economy = Economy.getInstance();
+    EconomyManager manager = economy.getEconomyManager();
 
     @EventHandler
     protected void onCloseListener(InventoryCloseEvent event) throws IOException {
@@ -44,8 +48,10 @@ public class EventListener implements Listener {
                 } catch (JSONException ee) {
                     money = money + default_price * item.getCount();
                 }
+                manager.addMoney(player, money);
+                player.sendMessage("Вы получили " + money + " денег за продажу ресурсов.");
             }
-            player.sendMessage("У вас: " + money + " деняк!");
+
         }
     }
 
